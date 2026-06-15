@@ -1,3 +1,6 @@
 .DS_Store
 __pycache__/
 *.pyc
+
+# Track this repo's development guide despite the global ~/.gitignore_global "CLAUDE.md" rule.
+!CLAUDE.md
