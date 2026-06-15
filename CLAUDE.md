@@ -23,7 +23,7 @@ When in doubt: does the model read it (English) or does the user see it (Russian
 ```
 .claude-plugin/
   plugin.json          # manifest — name, version, author(OBJECT), keywords(ARRAY)
-  marketplace.json     # makes this repo a single-plugin marketplace (plugin source ".")
+  marketplace.json     # makes this repo a single-plugin marketplace (plugin source "./")
 skills/managing-microventures/
   SKILL.md             # orchestrator — MUST stay < 500 lines; push detail into reference/
   reference/*.md       # 9 files: protocol + per-gate + intake + methodology explainers
@@ -43,9 +43,10 @@ drift between `SKILL.md`, `reference/`, the agents, the commands, and `README.md
 - **9 lenses (emoji ↔ kebab name):** ⏳ keeper-of-time · 👾 tech-skeptic · 💼 business-pragmatist ·
   🕳 demand-scout · ⚔️ devils-advocate · 🃏 lateral · ⚖️ synthesizer · 🛰 landscape-watcher ·
   🧰 metrics-engineer.
-- **4 gates + verdicts:** 0 Браться ли (`GO-INTO-SETUP`/`DROP`) · 1 Сетап линий (output = written
-  lines + named monkey) · 2 Чекпоинт (`GO`/`PIVOT`/`KILL`/`SCALE`) · 3 Пивот (one single-element
-  pivot, or `KILL`). **KILL & SCALE are verdicts of Gate 2, not gates.** 🃏 lateral sits on every gate.
+- **4 gates + verdicts:** 0 Браться ли (`GO-INTO-SETUP`/`DROP`) · 1 Сетап линий
+  (`LINES-SET`/`LINES-INCOMPLETE`; output = written lines + named monkey) · 2 Чекпоинт
+  (`GO`/`PIVOT`/`KILL`/`SCALE`) · 3 Пивот (one single-element pivot, or `KILL`). **KILL & SCALE are
+  verdicts of Gate 2, not gates.** 🃏 lateral sits on every gate.
 - **Lens return block (≤6 lines):** `VERDICT` / `CONFIDENCE` 0–100% / `EVIDENCE` (2–3 facts+sources) /
   `KILL-TRIGGER WATCH`.
 - **Course gradient (6 steps):** 🟢🟢 SCALE · 🟢 НА КУРСЕ · 🟡 БУКСУЕМ · 🟠 ТРЕВОГА · 🔴 FAIL FAST ·
@@ -62,12 +63,22 @@ drift between `SKILL.md`, `reference/`, the agents, the commands, and `README.md
 - **`SKILL.md` < 500 lines.** Detail lives in `reference/`. Check with `wc -l`.
 - **The hook must stay defensive.** `check-state.py` must never crash a session, never hard-block, and
   **always exit 0**. It stays silent when there is no `VENTURE.md`. SessionStart prints to **stdout**
-  (injected as context); Stop emits JSON **`systemMessage`** (Stop stdout is NOT surfaced). The
-  metrics collector runs in its own process group with a timeout. Re-run the smoke test after any
-  change (see below).
+  (injected as context); Stop emits JSON **`systemMessage`** (Stop stdout is NOT surfaced). `_read`
+  accepts only regular files under a size cap (a FIFO / device / huge file must not stall it);
+  `sys.stdout.reconfigure(utf-8)` so non-UTF-8 locales don't silently drop output. Re-run the smoke
+  test after any change (see below).
+- **Collector security invariant (do not weaken).** The metrics collector is project-local code, so it
+  runs **only when `VENTURE.md` marks the source `✔ verified`** (opening a foreign repo with a
+  collector must not execute it); with `cwd=project`, in its own process group (killed on timeout);
+  its stdout is treated as untrusted (first line only, length-capped, control chars stripped) and
+  **raw stderr is never echoed** into context.
 - **Per-project state.** `VENTURE.md`, `LANDSCAPE.md`, and `scripts/metrics/` live at the **project
   root** of each venture — never in the plugin dir or home. The engine is global, the state is
   per-project.
+- **Intake before record.** Gate 0/1 (and `/start`) interrogate the user, research claims, and pass
+  the adequacy bar before writing a `VENTURE.md` line — never fill a line from a vague answer
+  (`reference/intake-interview.md`). **Keep a single full path — no "lite" mode / behaviour
+  branching** (deliberate product decision).
 - **Secrets via env vars only** — never written into files (applies to generated metrics collectors).
 
 ## Authoring conventions (verified against code.claude.com/docs)
@@ -90,10 +101,13 @@ python3 -m json.tool .claude-plugin/marketplace.json >/dev/null
 wc -l skills/managing-microventures/SKILL.md             # must be < 500
 ```
 
-**Smoke-test the hook** in a throwaway dir (set `CLAUDE_PROJECT_DIR`): no `VENTURE.md` → silent;
-full `VENTURE.md` → Russian status block; working / failing / **hanging** collector (timeout, no
-hang, no orphan procs); fresh / stale / garbled / missing `LANDSCAPE.md`; `--on stop` with complete
-vs incomplete `VENTURE.md` (valid `systemMessage` JSON). It must always exit 0.
+**Smoke-test the hook** in a throwaway dir (set `CLAUDE_PROJECT_DIR`). Cover: no `VENTURE.md` → silent;
+full state → Russian status block; collector runs **only** when the source is `✔ verified` (and is NOT
+executed otherwise); working / failing / **hanging** collector (timeout ~10s, no orphan procs);
+collector output with control chars / multiple lines → sanitized to one clean line; a FIFO named
+`VENTURE.md` → skipped, no hang; non-UTF-8 locale (`LANG=C`) → still prints; fresh / stale / garbled /
+missing `LANDSCAPE.md`; `--on stop` complete → silent, incomplete or placeholder-only `## Decisions`
+→ `systemMessage` listing the missing sections. It must always exit 0.
 
 Also parse every YAML frontmatter (skill + agents + commands) before committing.
 
