@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "venture-compass",
+  "metadata": {
+    "description": "Single-plugin marketplace for venture-compass. Install from this checkout (local directory) or from the GitHub repo."
+  },
+  "owner": {
+    "name": "Yahor Bukhta",
+    "email": "nnslvp@users.noreply.github.com"
+  },
+  "plugins": [
+    {
+      "name": "venture-compass",
+      "description": "Autonomous co-pilot for solo, AI-built micro-ventures — agent-driven Stage-Gate lifecycle, blind adversarial consilium of lens subagents, kill-on-time. Slash commands are manual overrides only.",
+      "source": ".",
+      "category": "productivity",
+      "homepage": "https://github.com/nnslvp/venture-compass"
+    }
+  ]
+}
