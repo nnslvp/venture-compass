@@ -1,0 +1,27 @@
+{
+  "description": "venture-compass: mixes prior VENTURE.md state + live metrics + LANDSCAPE.md staleness into context at session start, and reminds at session stop if VENTURE.md is incomplete. Defensive — never blocks, always exits 0.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/check-state.py\" --on session-start",
+            "timeout": 20
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/check-state.py\" --on stop",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  }
+}

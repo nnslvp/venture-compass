@@ -1,0 +1,19 @@
+{
+  "name": "venture-compass",
+  "version": "0.2.0",
+  "description": "Autonomous co-pilot for solo, AI-built micro-ventures. The agent drives the lifecycle: it briefs at session start, watches kill dates / live metrics / the external landscape, and itself decides when to run a decision gate. At each gate it convenes a thorough adversarial consilium of subagent lenses that judge blind and independently, then a synthesizer fuses them into one honest verdict — GO / PIVOT / KILL / SCALE. State persists across sessions in VENTURE.md; default bias is kill on time. Slash commands (/audit /kill /override /details) are manual overrides only — briefing, landscape scans and metric pulls happen automatically.",
+  "author": {
+    "name": "Yahor Bukhta"
+  },
+  "homepage": "https://github.com/nnslvp/venture-compass",
+  "license": "MIT",
+  "keywords": [
+    "fail-fast",
+    "lean-startup",
+    "kill-criteria",
+    "solo-founder",
+    "consilium",
+    "autonomous-agent",
+    "project-tracker"
+  ]
+}
