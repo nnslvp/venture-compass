@@ -12,7 +12,7 @@
     {
       "name": "venture-compass",
       "description": "Autonomous co-pilot for solo, AI-built micro-ventures — agent-driven Stage-Gate lifecycle, blind adversarial consilium of lens subagents, kill-on-time. Slash commands are manual overrides only.",
-      "source": ".",
+      "source": "./",
       "category": "productivity",
       "homepage": "https://github.com/nnslvp/venture-compass"
     }

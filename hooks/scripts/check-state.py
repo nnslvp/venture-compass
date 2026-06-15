@@ -9,9 +9,15 @@ session-start -> prints a short Russian status block to stdout. Claude Code
                  is how prior state + live metrics + landscape staleness reach
                  the agent automatically each session.
 stop          -> verifies VENTURE.md has the required sections and at least one
-                 Decisions entry; if not, emits a JSON {"systemMessage": ...}
+                 REAL Decisions entry; if not, emits a JSON {"systemMessage": ...}
                  reminder (Stop stdout is NOT shown as context, so a plain print
                  would be invisible — systemMessage surfaces it to the user).
+
+Security: the metrics collector under scripts/metrics/ is project-local code, so
+it is treated as untrusted. It runs ONLY when VENTURE.md marks the metrics source
+"✔ verified" — opening some other repo that merely contains a collector does not
+execute it. Its output is treated as untrusted too: one line, length-capped,
+control characters stripped; raw stderr is never echoed into the model context.
 
 If VENTURE.md is absent, the hook stays completely silent so it never pollutes
 unrelated projects where the plugin happens to be installed.
@@ -21,12 +27,30 @@ import json
 import os
 import re
 import signal
+import stat
 import subprocess
 import sys
 from datetime import date, datetime
 
 LANDSCAPE_STALE_DAYS = 5
 COLLECTOR_TIMEOUT = 10
+MAX_FILE_BYTES = 1_000_000
+MAX_METRIC_CHARS = 200
+
+# Decision-critical sections that let a fresh session reconstruct the venture.
+REQUIRED_SECTIONS = [
+    ("Stage:", r"^Stage\s*:"),
+    ("Course:", r"^Course\s*:"),
+    ("Current gate:", r"^Current gate\s*:"),
+    ("## The bet", r"^##\s+The bet\b"),
+    ("## Vacuum thesis", r"^##\s+Vacuum thesis\b"),
+    ("## Success line", r"^##\s+Success line\b"),
+    ("## Kill line", r"^##\s+Kill line\b"),
+    ("## Riskiest assumption", r"^##\s+Riskiest assumption\b"),
+    ("## Current experiment", r"^##\s+Current experiment\b"),
+    ("## Источник метрик", r"^##\s+Источник метрик"),
+    ("## Decisions", r"^##\s+Decisions\b"),
+]
 
 
 def _project_dir():
@@ -34,9 +58,16 @@ def _project_dir():
 
 
 def _read(path):
+    """Read a regular text file, size-capped. Skip FIFOs/devices/huge files so a
+    crafted path can never stall the 'never block' contract."""
     try:
-        with open(path, "r", encoding="utf-8") as fh:
-            return fh.read()
+        st = os.stat(path)
+        if not stat.S_ISREG(st.st_mode):
+            return None
+        if st.st_size > MAX_FILE_BYTES:
+            return None
+        with open(path, "r", encoding="utf-8", errors="replace") as fh:
+            return fh.read(MAX_FILE_BYTES)
     except Exception:
         return None
 
@@ -77,45 +108,89 @@ def _find_dates(text):
     return out
 
 
-def _metrics_line(project):
+def _clean_metric(s):
+    """Treat collector stdout as untrusted: first non-empty line, control chars
+    stripped (no ANSI / prompt-injection), length-capped."""
+    raw = (s or "").strip()
+    line = raw.splitlines()[0] if raw else ""
+    line = "".join(ch for ch in line if ch == " " or ch.isprintable())
+    if len(line) > MAX_METRIC_CHARS:
+        line = line[:MAX_METRIC_CHARS] + "…"
+    return line.strip()
+
+
+def _source_verified(text):
+    """True only if the metrics source is explicitly marked '✔ verified'."""
+    return bool(re.search(r"✔\s*verified", _section(text, "Источник метрик"),
+                          re.IGNORECASE))
+
+
+def _kill_pg(pgid):
+    if pgid is None:
+        return
+    try:
+        os.killpg(pgid, signal.SIGKILL)
+    except Exception:
+        pass
+
+
+def _metrics_line(project, text):
+    collector = None
     for name in ("collect.sh", "collect.py"):
         path = os.path.join(project, "scripts", "metrics", name)
-        if not os.path.isfile(path):
-            continue
+        if os.path.isfile(path):
+            collector = (name, path)
+            break
+    if not collector:
+        return ("📊 Источник метрик не настроен — запусти metrics-engineer, "
+                "чтобы цифры не брались «со слов»")
+    name, path = collector
+    if not _source_verified(text):
+        return ("📊 Коллектор есть, но источник не помечен «✔ verified» в "
+                "## Источник метрик — не запускаю из соображений доверия "
+                "(прогони metrics-engineer и подтверди источник)")
+
+    proc = None
+    pgid = None
+    try:
+        cmd = [sys.executable or "python3", path] if name.endswith(".py") else ["sh", path]
+        # Own session/process group (so a backgrounded grandchild can be killed)
+        # and cwd at the project root (so the collector's relative paths resolve).
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                text=True, start_new_session=True, cwd=project)
         try:
-            if name.endswith(".py"):
-                cmd = [sys.executable or "python3", path]
-            else:
-                cmd = ["sh", path]
-            # start_new_session isolates the collector in its own process group so a
-            # backgrounded grandchild is killed on timeout instead of leaking and
-            # holding the pipe open for the whole hook timeout.
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                    text=True, start_new_session=True)
+            pgid = os.getpgid(proc.pid)
+        except Exception:
+            pgid = None
+        try:
+            out, _err = proc.communicate(timeout=COLLECTOR_TIMEOUT)
+        except subprocess.TimeoutExpired:
+            _kill_pg(pgid)
             try:
-                out, err = proc.communicate(timeout=COLLECTOR_TIMEOUT)
-            except subprocess.TimeoutExpired:
-                try:
-                    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
-                except Exception:
-                    proc.kill()
-                try:
-                    proc.communicate(timeout=2)
-                except Exception:
-                    pass
-                return ("📊 Живые метрики: сборщик не ответил за " +
-                        str(COLLECTOR_TIMEOUT) + "с — проверь scripts/metrics/" + name)
-            if proc.returncode == 0 and (out or "").strip():
-                return "📊 Живые метрики: " + out.strip().splitlines()[0]
-            tail = ((err or "") + (out or "")).strip().splitlines()
-            why = tail[0] if tail else ("код " + str(proc.returncode))
-            return ("📊 Живые метрики: сборщик вернул ошибку (" + why +
-                    ") — проверь scripts/metrics/" + name)
-        except Exception as exc:
-            return ("📊 Живые метрики: не удалось запустить сборщик (" +
-                    type(exc).__name__ + ")")
-    return ("📊 Источник метрик не настроен — запусти metrics-engineer, "
-            "чтобы цифры не брались «со слов»")
+                proc.communicate(timeout=2)
+            except Exception:
+                pass
+            return ("📊 Живые метрики: сборщик не ответил за " +
+                    str(COLLECTOR_TIMEOUT) + "с — проверь scripts/metrics/" + name)
+        if proc.returncode == 0:
+            metric = _clean_metric(out)
+            if metric:
+                return "📊 Живые метрики: " + metric
+            return ("📊 Живые метрики: сборщик ничего не вернул — "
+                    "проверь scripts/metrics/" + name)
+        # Never echo raw stderr (may carry secrets or model-context injection).
+        return ("📊 Живые метрики: сборщик вернул ошибку (код " +
+                str(proc.returncode) + ") — проверь scripts/metrics/" + name)
+    except Exception as exc:
+        return ("📊 Живые метрики: не удалось запустить сборщик (" +
+                type(exc).__name__ + ")")
+    finally:
+        # Only if the leader is still alive — avoids killing a reused pgid.
+        try:
+            if proc is not None and proc.poll() is None:
+                _kill_pg(pgid)
+        except Exception:
+            pass
 
 
 def _landscape_line(project):
@@ -160,27 +235,34 @@ def on_session_start(project, text):
             out.append("💀 Киллтриггер ПРОСРОЧЕН: " + nearest.isoformat() +
                        " (" + str(-days) + " дн. назад) — пора на чекпоинт")
 
-    out.append(_metrics_line(project))
+    out.append(_metrics_line(project, text))
     landscape = _landscape_line(project)
     if landscape:
         out.append(landscape)
     print("\n".join(out))
 
 
+def _has_real_decision(body):
+    """A real entry has VERDICT/ВЕРДИКТ and a BARE date — not a `<YYYY-MM-DD>`
+    placeholder or an HTML comment."""
+    if not body:
+        return False
+    for line in body.splitlines():
+        s = line.strip()
+        if not s or s.startswith("<!--") or s.startswith("#"):
+            continue
+        if "verdict" not in s.lower() and "вердикт" not in s.lower():
+            continue
+        if re.search(r"(?<!<)\d{4}-\d{2}-\d{2}(?!>)", s):
+            return True
+    return False
+
+
 def on_stop(project, text):
-    missing = []
-    if not re.search(r"^Stage\s*:", text, re.IGNORECASE | re.MULTILINE):
-        missing.append("Stage:")
-    if not re.search(r"^##\s+Kill line\b", text, re.IGNORECASE | re.MULTILINE):
-        missing.append("## Kill line")
-    if not re.search(r"^##\s+Decisions\b", text, re.IGNORECASE | re.MULTILINE):
-        missing.append("## Decisions")
-    else:
-        body = _section(text, "Decisions")
-        has_entry = bool(re.search(r"^\s*[-*0-9]|VERDICT|ВЕРДИКТ", body or "",
-                                   re.IGNORECASE | re.MULTILINE))
-        if not has_entry:
-            missing.append("запись в ## Decisions")
+    missing = [label for label, pat in REQUIRED_SECTIONS
+               if not re.search(pat, text, re.IGNORECASE | re.MULTILINE)]
+    if "## Decisions" not in missing and not _has_real_decision(_section(text, "Decisions")):
+        missing.append("запись в ## Decisions")
     if missing:
         msg = ("⚠ VENTURE.md неполон: нет " + ", ".join(missing) +
                ". Ворота не закрыты, пока вердикт и оценки линз не записаны в ## Decisions.")
@@ -192,6 +274,10 @@ def on_stop(project, text):
 
 def main():
     try:
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass  # older Python / non-reconfigurable stream — output may degrade, never crash
         argv = sys.argv[1:]
         mode = "session-start"
         if "--on" in argv:

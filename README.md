@@ -72,8 +72,14 @@ independently first, synthesize second (Asch / Janis).
 
 - Runs in **Claude Code** (skills, subagents, hooks, slash commands).
 - The state hook (`hooks/scripts/check-state.py`) runs at session start and stop. At session start it
-  mixes prior `VENTURE.md` state + **live metrics** + landscape staleness into context. It runs **your
-  own** metrics collector (`scripts/metrics/collect.sh` or `.py`) with a timeout, and is defensive —
-  it never blocks a session and always exits 0. If there's no `VENTURE.md`, it stays silent.
-- **Secrets** (API tokens for the metrics collector) are read from **environment variables**, never
-  written into files.
+  mixes prior `VENTURE.md` state + **live metrics** + landscape staleness into context. It is
+  defensive — never blocks a session, always exits 0, reads state files with a size cap, and stays
+  completely silent if there's no `VENTURE.md`.
+- **Security — the metrics collector is project-local code.** The hook runs `scripts/metrics/collect.*`
+  **only when `VENTURE.md` marks the source `✔ verified`**, so merely opening some other repo that
+  happens to contain a collector does **not** execute it. It runs in its own process group with a
+  timeout and `cwd` at the project root, and treats the collector's output as untrusted (one line,
+  length-capped, control characters stripped; raw stderr is never echoed into context). Marking a
+  source `✔ verified` = authorizing that script to run on session start.
+- **Secrets** (API tokens for the collector) are read from **environment variables**, never written
+  into files.

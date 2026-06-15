@@ -41,6 +41,9 @@ is the one riskiest assumption?
 **Lenses:** ⚔️ devils-advocate (pre-mortem) · ⏳ keeper-of-time · 💼 business-pragmatist · 🃏 lateral.
 **Output (not a GO/KILL verdict):** the **written lines** (success line, ≥2 kill triggers, honest P%)
 + the **named monkey** (riskiest assumption), recorded in `VENTURE.md`.
+**Verdict vocabulary:** lenses return `LINES-SET` (the lines + monkey are complete and pass the
+adequacy bar) or `LINES-INCOMPLETE` (something is missing, vague, or fails adequacy — keep
+interrogating). The synthesizer declares `LINES-SET` only when the recorded lines are ready.
 
 **Intake first:** run the full intake interview (`intake-interview.md`) — squeeze out every field
 (success line, ≥2 kill triggers, honest P%, the monkey, the first experiment, the metrics source,
