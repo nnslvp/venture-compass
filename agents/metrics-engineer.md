@@ -18,7 +18,8 @@ Read `VENTURE.md` to find the OMTM and `## Источник метрик`. Then:
 1. **Ask 1–3 sharp questions** to locate the *real* number — where it lives (analytics API, DB,
    dashboard export, store console), how it's accessed, what the OMTM precisely is. Ask only what you
    can't determine yourself.
-2. **Build the collector.** Prefer generating `scripts/metrics/collect.sh` (or `collect.py`) that
+2. **Build the collector.** Prefer generating `scripts/metrics/collect.sh` (or `collect.py`) **at the
+   project root** (next to this venture's `VENTURE.md`, never in the global plugin dir) that
    prints the current OMTM in a **stable one-line form**, e.g. `active_users=17 / target=50`.
    - **Secrets come from environment variables, never written into files.** Read e.g. `$API_TOKEN`.
    - **Fail loudly** (non-zero exit + stderr) if it cannot get a real number — never print a fake or

@@ -22,7 +22,8 @@ what could move a kill trigger or the vacuum thesis, e.g.:
 
 Drop everything that is merely interesting. One soft "industry buzz" item is noise.
 
-**Write `LANDSCAPE.md`** (content in **Russian**) with this shape — keep the `Last scan:` line in this
+**Write `LANDSCAPE.md`** at the **project root** (next to `VENTURE.md`, never in the global plugin
+dir), content in **Russian**, with this shape — keep the `Last scan:` line in this
 exact form so the session hook can parse it:
 
 ```

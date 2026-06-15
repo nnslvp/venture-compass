@@ -75,6 +75,12 @@ Then capture the one lesson and point at the next bet.
 
 ## 3. State — VENTURE.md + LANDSCAPE.md
 
+- **Location — always in the project folder.** `VENTURE.md`, `LANDSCAPE.md`, and the metrics
+  collector `scripts/metrics/collect.sh` (or `.py`) live at the **root of the current project** (the
+  folder Claude Code is opened in / `$CLAUDE_PROJECT_DIR`), **one set per venture** — never in the
+  global plugin directory or the home folder. This is what keeps separate ventures independent: the
+  engine (this skill + the lenses) is global, the state is per-project. The SessionStart hook
+  resolves all of these from the project folder automatically.
 - **`VENTURE.md`** is the single source of truth — one per project. It must let a fresh session
   weeks later resume with **zero re-interrogation**. Full section list and the dashboard format:
   `reference/venture-md-template.md`. Content is **Russian**; structural headers stay as written so

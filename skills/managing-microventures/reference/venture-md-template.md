@@ -29,7 +29,8 @@ SessionStart/Stop hook can parse them. Keep `Stage:`, `Course:`, `Current gate:`
 
 ## Section template
 
-Copy this skeleton into the project's `VENTURE.md`. Fill the `<...>` in Russian.
+Copy this skeleton into the project's `VENTURE.md` (at the **project root**, one per venture). Fill
+the `<...>` in Russian.
 
 ```markdown
 # Venture: <название>
