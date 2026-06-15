@@ -14,6 +14,10 @@ now and save the time?
 **Lenses:** 🕳 demand-scout · 👾 tech-skeptic · ⚔️ devils-advocate · 🃏 lateral.
 **Verdict vocabulary:** `GO-INTO-SETUP` / `DROP`.
 
+**Intake first:** interrogate the user for the demand/feasibility fields (the bet, the vacuum + a real
+demand signal, platform risk, constraints) — drill, research each claim, refuse mush
+(`intake-interview.md`). Don't issue GO/DROP until the inputs are concrete.
+
 **Emphasis:**
 - 🕳 demand-scout runs The Mom Test on the demand: past behavior and commitments, not "would you use
   it?". Demands a real signal; **"no competitors" is not a signal** — a dead market also has no
@@ -37,6 +41,11 @@ is the one riskiest assumption?
 **Lenses:** ⚔️ devils-advocate (pre-mortem) · ⏳ keeper-of-time · 💼 business-pragmatist · 🃏 lateral.
 **Output (not a GO/KILL verdict):** the **written lines** (success line, ≥2 kill triggers, honest P%)
 + the **named monkey** (riskiest assumption), recorded in `VENTURE.md`.
+
+**Intake first:** run the full intake interview (`intake-interview.md`) — squeeze out every field
+(success line, ≥2 kill triggers, honest P%, the monkey, the first experiment, the metrics source,
+channels, constraints), research the checkable claims, and sanity-check each for adequacy before you
+write the lines.
 
 **Emphasis:**
 - ⚔️ devils-advocate runs a **pre-mortem** ("it's 6 months later and this failed — why?") and converts
