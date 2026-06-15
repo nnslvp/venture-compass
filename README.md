@@ -38,11 +38,12 @@ claude --plugin-dir /path/to/parent-of-venture-compass
   @LANDSCAPE.md
   ```
 
-The four slash commands are **manual overrides only** — briefing, landscape scans, and metric pulls
-all happen automatically:
+Kick off a venture with `/start`; the other four are **manual overrides** — briefing, landscape
+scans, and metric pulls happen automatically:
 
 | Command | Effect |
 |---------|--------|
+| `/start [idea]` | **Init / kick off a venture** — scaffold the base files + run the guided intake (Gate 0 → Gate 1). |
 | `/audit [area]` | Force a Gate 2 checkpoint now (live metrics → blind consilium → verdict). |
 | `/kill [reason]` | Close the venture manually (confirm once; irreversible). |
 | `/override [change]` | Reject or hold the agent's last call (logged; never erases a fired trigger). |

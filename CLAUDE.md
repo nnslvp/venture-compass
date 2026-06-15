@@ -28,7 +28,7 @@ skills/managing-microventures/
   SKILL.md             # orchestrator — MUST stay < 500 lines; push detail into reference/
   reference/*.md       # 9 files: protocol + per-gate + intake + methodology explainers
 agents/*.md            # 9 lens/worker subagents
-commands/*.md          # 4 manual-override slash commands
+commands/*.md          # 5 slash commands: /start (kickoff) + audit/kill/override/details (overrides)
 hooks/
   hooks.json           # SessionStart + Stop → check-state.py
   scripts/check-state.py

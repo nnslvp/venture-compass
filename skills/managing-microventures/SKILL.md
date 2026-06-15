@@ -4,8 +4,8 @@ description: >-
   Use when the user talks about a side-project, micro-app, bot, site or any small AI-built
   venture — and proactively at the START of every session in such a project. Triggers: "start a
   project", "new idea", "how's X going", "should I keep going", "should I kill this", "fail fast",
-  "kill criteria", "pivot", "брифинг", "аудит", "стоит ли браться", plus the commands /audit /kill
-  /override /details. This skill makes the AGENT drive the venture lifecycle: it briefs at session
+  "kill criteria", "pivot", "брифинг", "аудит", "стоит ли браться", plus the commands /start /audit
+  /kill /override /details. This skill makes the AGENT drive the venture lifecycle: it briefs at session
   start, watches kill dates / live metrics / the external landscape and itself decides when to run a
   Stage-Gate decision gate, keeps VENTURE.md as persistent state, convenes a blind adversarial
   consilium of lens subagents, and returns ONE honest verdict (GO / PIVOT / KILL / SCALE) —
@@ -153,15 +153,17 @@ KILL".
 
 ---
 
-## 6. The control panel + the four manual commands
+## 6. The control panel + the commands
 
 **Print the control panel as a dashboard at the end of every substantive reply** — so the kill line
 stays in view. Exact Russian format: `reference/venture-md-template.md` (§ Панель). The gauge dot is
 the OMTM's position between the KILL threshold and the target.
 
-The four slash commands are **manual overrides only** — briefing, landscape scans and metric pulls
-all happen automatically without them:
+**`/start`** is the kickoff. The other four are **manual overrides** — briefing, landscape scans and
+metric pulls happen automatically without them:
 
+- **`/start`** — init / kick off a venture: scaffold `VENTURE.md` + wire `CLAUDE.md`, then interrogate
+  through Gate 0 → Gate 1 and fill the lines (`reference/intake-interview.md`).
 - **`/audit`** — force a Gate 2 checkpoint now (pull live metrics → full panel → blind consilium →
   synthesize; KILL/PIVOT proposed→confirm). Optional argument = area to weight.
 - **`/kill`** — close the venture manually (confirm once; irreversible).
