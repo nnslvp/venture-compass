@@ -128,3 +128,25 @@ Filled example:
 
 The gauge dot moves left as the OMTM nears the KILL threshold and right as it nears the target. When
 the OMTM is at or below KILL: `💀●─────────── 🎯` and Course flips to `🔴 FAIL FAST`.
+
+---
+
+## Project CLAUDE.md (auto-wire)
+
+During Gate 1 setup, create the venture's `CLAUDE.md` at the project root (or **append** to an
+existing one — **never clobber**) so the state auto-loads each session and survives `/compact`. Create
+`VENTURE.md` first so the `@`-import isn't dangling. Content in Russian:
+
+```markdown
+# <Название венчура>
+
+Проект ведётся через venture-compass (микро-венчур).
+
+@VENTURE.md
+@LANDSCAPE.md
+
+На старте каждой сессии молча восстанови контекст из VENTURE.md и LANDSCAPE.md и сделай брифинг
+(где мы → что изменилось снаружи → что это значит → рекомендация) + панель. Дальше веди цикл сам:
+следи за датами / метриками / ландшафтом, сам запускай чекпоинты, при сработавшем киллтриггере
+рекомендуй KILL и жди явного «да».
+```

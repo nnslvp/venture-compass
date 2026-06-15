@@ -58,7 +58,9 @@ write the lines.
 
 **Borrowed:** Lean Canvas riskiest-first; pre-mortem; state+date kill criteria; reverse income
 statement; monkeys & pedestals.
-**On completion:** Stage → `ALIVE`; lines written; first experiment defined; log to `## Decisions`.
+**On completion:** Stage → `ALIVE`; lines written; first experiment defined; **wire the project
+`CLAUDE.md`** (create, or append to it — `@VENTURE.md` + `@LANDSCAPE.md`, never clobber); log to
+`## Decisions`.
 
 ---
 

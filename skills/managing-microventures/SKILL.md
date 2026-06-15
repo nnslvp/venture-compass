@@ -96,8 +96,11 @@ Then capture the one lesson and point at the next bet.
   `reference/venture-md-template.md`. Content is **Russian**; structural headers stay as written so
   the hook can parse them.
 - **`LANDSCAPE.md`** holds the latest external digest (written by 🛰 landscape-watcher).
-- **Tell the user once** to add `@VENTURE.md` and `@LANDSCAPE.md` to the project `CLAUDE.md` so both
-  auto-load each session and survive `/compact`.
+- **Wire up `CLAUDE.md` yourself (during setup).** Create the project's `CLAUDE.md` with
+  `@VENTURE.md` and `@LANDSCAPE.md` imports so both auto-load each session and survive `/compact`.
+  Create `VENTURE.md` first so the import isn't dangling. If `CLAUDE.md` already exists, **append** the
+  imports — **never clobber** existing content. Template: `reference/venture-md-template.md`
+  (§ Project CLAUDE.md).
 - **Silent context reconstruction:** on the first message of a session, read both files and the
   hook's injected status *before* you respond. Never make the user re-explain the venture.
 
