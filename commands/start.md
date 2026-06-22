@@ -14,43 +14,43 @@ without overwriting anything that already exists:
 
 ```bash
 [ -f VENTURE.md ] || cat > VENTURE.md <<'EOF'
-# Venture: <название>
+# Venture: <name>
 
 Stage: SETUP
-Course: 🟢 НА КУРСЕ
-Current gate: 0 · Браться ли
+Course: 🟢 ON COURSE
+Current gate: 0 · Take it on?
 
 ## The bet
-<на что ставим и почему сейчас>
+<what we're betting on and why now>
 ## Vacuum thesis
-<какой вакуум; сигнал реального спроса — НЕ «нет конкурентов»>
+<what vacuum; a real demand signal — NOT "no competitors">
 ## Lean Canvas
-Версия: v1
+Version: v1
 ## Success line
-<состояние + дата>
+<state + date>
 ## Kill line
-- <триггер 1: состояние + дата>
-- <триггер 2: состояние + дата>
-Честная P(успеха): <~%>
+- <trigger 1: state + date>
+- <trigger 2: state + date>
+Honest P(success): <~%>
 ## Riskiest assumption (the monkey)
-<самое смертельное допущение; проверяем первым>
+<the most lethal assumption; tested first>
 ## Current experiment
-- Гипотеза: <...>
-- Что меряем (OMTM): <...>
-- Дата решения: <дата>
-- Потолок затрат: <...>
-## Источник метрик
-Тип: none
-Статус: ⚠ self-reported
+- Hypothesis: <...>
+- What we measure (OMTM): <...>
+- Decision date: <date>
+- Cost cap: <...>
+## Metrics source
+Type: none
+Status: ⚠ self-reported
 ## Channels
 <...>
 ## Log
-- старт
+- start
 ## Decisions
-<!-- append-only: ворота · VERDICT · оценка каждой линзы · почему -->
+<!-- append-only: gate · VERDICT · each lens's call · why -->
 EOF
 grep -q '@VENTURE.md' CLAUDE.md 2>/dev/null || printf '\n@VENTURE.md\n@LANDSCAPE.md\n' >> CLAUDE.md
-[ -f LANDSCAPE.md ] || printf 'Last scan: %s\n\n## Сдвигают триггер ⚠️\n- нет\n' "$(date +%F)" > LANDSCAPE.md
+[ -f LANDSCAPE.md ] || printf 'Last scan: %s\n\n## Moves a trigger ⚠️\n- none\n' "$(date +%F)" > LANDSCAPE.md
 echo "scaffold ok"
 ```
 
@@ -61,9 +61,9 @@ user the venture already exists and offer `/audit` (checkpoint) or to resume ins
 
 Then immediately run the intake interview from `reference/intake-interview.md` (full protocol):
 
-- **Gate 0 · Браться ли** — interrogate for the bet, the vacuum + a real demand signal, platform risk,
-  and constraints; research each checkable claim; verdict **GO-INTO-SETUP** / **DROP**.
-- On GO, **Gate 1 · Сетап линий** — drill out every field: success line, ≥2 dated kill triggers,
+- **Gate 0 · Take it on?** — interrogate for the bet, the vacuum + a real demand signal, platform
+  risk, and constraints; research each checkable claim; verdict **GO-INTO-SETUP** / **DROP**.
+- On GO, **Gate 1 · Set the lines** — drill out every field: success line, ≥2 dated kill triggers,
   honest P%, the monkey, the first experiment, the metrics source, channels.
 
 Discipline: **ask one thread at a time**; refuse vague / hypothetical / wishlist answers (The Mom
@@ -76,4 +76,4 @@ given, seed "the bet" with it and start drilling from there.
 When the lines are concrete and adequacy-passed: set `Stage:` → `ALIVE`, log Gate 0/1 to
 `## Decisions` (verdict + each lens's call + why), offer to wire the metrics source via
 `metrics-engineer`, and print the control panel. Irreversible calls (KILL / committing a PIVOT) are
-proposed and wait for the user's explicit "да".
+proposed and wait for the user's explicit "yes".

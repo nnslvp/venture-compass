@@ -4,7 +4,7 @@
 Defensive by design: it must NEVER crash a session and NEVER hard-block.
 Everything is wrapped; the process always exits 0.
 
-session-start -> prints a short Russian status block to stdout. Claude Code
+session-start -> prints a short English status block to stdout. Claude Code
                  injects SessionStart stdout into the session context, so this
                  is how prior state + live metrics + landscape staleness reach
                  the agent automatically each session.
@@ -48,7 +48,7 @@ REQUIRED_SECTIONS = [
     ("## Kill line", r"^##\s+Kill line\b"),
     ("## Riskiest assumption", r"^##\s+Riskiest assumption\b"),
     ("## Current experiment", r"^##\s+Current experiment\b"),
-    ("## Источник метрик", r"^##\s+Источник метрик"),
+    ("## Metrics source", r"^##\s+Metrics source"),
     ("## Decisions", r"^##\s+Decisions\b"),
 ]
 
@@ -121,7 +121,7 @@ def _clean_metric(s):
 
 def _source_verified(text):
     """True only if the metrics source is explicitly marked '✔ verified'."""
-    return bool(re.search(r"✔\s*verified", _section(text, "Источник метрик"),
+    return bool(re.search(r"✔\s*verified", _section(text, "Metrics source"),
                           re.IGNORECASE))
 
 
@@ -142,13 +142,13 @@ def _metrics_line(project, text):
             collector = (name, path)
             break
     if not collector:
-        return ("📊 Источник метрик не настроен — запусти metrics-engineer, "
-                "чтобы цифры не брались «со слов»")
+        return ("📊 Metrics source not configured — run metrics-engineer so "
+                "numbers aren't taken from memory")
     name, path = collector
     if not _source_verified(text):
-        return ("📊 Коллектор есть, но источник не помечен «✔ verified» в "
-                "## Источник метрик — не запускаю из соображений доверия "
-                "(прогони metrics-engineer и подтверди источник)")
+        return ("📊 A collector exists, but the source isn't marked "
+                "'✔ verified' in ## Metrics source — not running it for trust "
+                "reasons (run metrics-engineer and verify the source)")
 
     proc = None
     pgid = None
@@ -170,19 +170,19 @@ def _metrics_line(project, text):
                 proc.communicate(timeout=2)
             except Exception:
                 pass
-            return ("📊 Живые метрики: сборщик не ответил за " +
-                    str(COLLECTOR_TIMEOUT) + "с — проверь scripts/metrics/" + name)
+            return ("📊 Live metrics: collector didn't respond within " +
+                    str(COLLECTOR_TIMEOUT) + "s — check scripts/metrics/" + name)
         if proc.returncode == 0:
             metric = _clean_metric(out)
             if metric:
-                return "📊 Живые метрики: " + metric
-            return ("📊 Живые метрики: сборщик ничего не вернул — "
-                    "проверь scripts/metrics/" + name)
+                return "📊 Live metrics: " + metric
+            return ("📊 Live metrics: collector returned nothing — "
+                    "check scripts/metrics/" + name)
         # Never echo raw stderr (may carry secrets or model-context injection).
-        return ("📊 Живые метрики: сборщик вернул ошибку (код " +
-                str(proc.returncode) + ") — проверь scripts/metrics/" + name)
+        return ("📊 Live metrics: collector returned an error (code " +
+                str(proc.returncode) + ") — check scripts/metrics/" + name)
     except Exception as exc:
-        return ("📊 Живые метрики: не удалось запустить сборщик (" +
+        return ("📊 Live metrics: couldn't launch the collector (" +
                 type(exc).__name__ + ")")
     finally:
         # Only if the leader is still alive — avoids killing a reused pgid.
@@ -196,28 +196,28 @@ def _metrics_line(project, text):
 def _landscape_line(project):
     text = _read(os.path.join(project, "LANDSCAPE.md"))
     if text is None:
-        return "🛰 LANDSCAPE.md нет — пора пройтись по внешнему ландшафту (landscape-watcher)"
-    m = re.search(r"^(?:Last scan|Последнее сканирование)\s*:\s*(\d{4}-\d{2}-\d{2})",
+        return "🛰 No LANDSCAPE.md — time to scan the external landscape (landscape-watcher)"
+    m = re.search(r"^Last scan\s*:\s*(\d{4}-\d{2}-\d{2})",
                   text, re.IGNORECASE | re.MULTILINE)
     if not m:
-        return "🛰 LANDSCAPE.md без даты сканирования — обнови ландшафт (landscape-watcher)"
+        return "🛰 LANDSCAPE.md has no scan date — refresh the landscape (landscape-watcher)"
     try:
         scan = datetime.strptime(m.group(1), "%Y-%m-%d").date()
     except Exception:
-        return "🛰 LANDSCAPE.md: дата сканирования нечитаема — обнови ландшафт (landscape-watcher)"
+        return "🛰 LANDSCAPE.md: scan date is unreadable — refresh the landscape (landscape-watcher)"
     age = (_today() - scan).days
     if age > LANDSCAPE_STALE_DAYS:
-        return ("🛰 Ландшафт устарел (" + str(age) +
-                " дн. назад) — обнови (landscape-watcher)")
+        return ("🛰 Landscape is stale (" + str(age) +
+                " days ago) — refresh (landscape-watcher)")
     return None
 
 
 def on_session_start(project, text):
-    out = ["🎛 venture-compass — состояние проекта"]
+    out = ["🎛 venture-compass — venture state"]
     nm = re.search(r"^#\s*Venture\s*:?\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
     if nm and nm.group(1).strip():
         out[0] = "🎛 venture-compass — " + nm.group(1).strip()
-    for label, key in (("Этап", "Stage"), ("Курс", "Course"), ("Ворота", "Current gate")):
+    for label, key in (("Stage", "Stage"), ("Course", "Course"), ("Gate", "Current gate")):
         val = _field(text, key)
         if val:
             out.append(label + ": " + val)
@@ -229,11 +229,11 @@ def on_session_start(project, text):
         nearest = upcoming[0] if upcoming else dates[-1]
         days = (nearest - today).days
         if days >= 0:
-            out.append("💀 Ближайший киллтриггер: " + nearest.isoformat() +
-                       " (через " + str(days) + " дн.)")
+            out.append("💀 Nearest kill trigger: " + nearest.isoformat() +
+                       " (in " + str(days) + " days)")
         else:
-            out.append("💀 Киллтриггер ПРОСРОЧЕН: " + nearest.isoformat() +
-                       " (" + str(-days) + " дн. назад) — пора на чекпоинт")
+            out.append("💀 Kill trigger OVERDUE: " + nearest.isoformat() +
+                       " (" + str(-days) + " days ago) — time for a checkpoint")
 
     out.append(_metrics_line(project, text))
     landscape = _landscape_line(project)
@@ -243,7 +243,7 @@ def on_session_start(project, text):
 
 
 def _has_real_decision(body):
-    """A real entry has VERDICT/ВЕРДИКТ and a BARE date — not a `<YYYY-MM-DD>`
+    """A real entry has VERDICT and a BARE date — not a `<YYYY-MM-DD>`
     placeholder or an HTML comment."""
     if not body:
         return False
@@ -251,7 +251,7 @@ def _has_real_decision(body):
         s = line.strip()
         if not s or s.startswith("<!--") or s.startswith("#"):
             continue
-        if "verdict" not in s.lower() and "вердикт" not in s.lower():
+        if "verdict" not in s.lower():
             continue
         if re.search(r"(?<!<)\d{4}-\d{2}-\d{2}(?!>)", s):
             return True
@@ -262,10 +262,11 @@ def on_stop(project, text):
     missing = [label for label, pat in REQUIRED_SECTIONS
                if not re.search(pat, text, re.IGNORECASE | re.MULTILINE)]
     if "## Decisions" not in missing and not _has_real_decision(_section(text, "Decisions")):
-        missing.append("запись в ## Decisions")
+        missing.append("a ## Decisions entry")
     if missing:
-        msg = ("⚠ VENTURE.md неполон: нет " + ", ".join(missing) +
-               ". Ворота не закрыты, пока вердикт и оценки линз не записаны в ## Decisions.")
+        msg = ("⚠ VENTURE.md is incomplete: missing " + ", ".join(missing) +
+               ". The gate isn't closed until the verdict and lens calls are "
+               "written to ## Decisions.")
         try:
             print(json.dumps({"systemMessage": msg}, ensure_ascii=False))
         except Exception:

@@ -4,19 +4,19 @@ This repo **is** the `venture-compass` Claude Code plugin (and doubles as a sing
 **marketplace** via `.claude-plugin/marketplace.json`). This file is guidance for working **on** the
 plugin. For what the plugin does for end users, see `README.md`.
 
-## The golden rule — language split
+## The golden rule — everything is English
 
 - **Instructions are English.** Everything that instructs the model — `SKILL.md`, the agent bodies,
-  the command bodies, the `reference/*.md`, and all YAML frontmatter — is written in English (Claude
-  Code convention + portability).
-- **Runtime user-facing output is Russian.** Everything the plugin shows or writes at runtime — the
-  agent's replies, the control panel, command effects, the hook's printed output, and the
-  **content/values** written into `VENTURE.md` / `LANDSCAPE.md` — is Russian.
-- **Structural headers stay English.** `VENTURE.md` section headers (`Stage:`, `## Kill line`,
-  `## Decisions`, …) and the `Last scan:` line in `LANDSCAPE.md` stay exactly as written so the hook
-  can parse them. Russian goes in the values under them.
+  the command bodies, the `reference/*.md`, and all YAML frontmatter — is English (Claude Code
+  convention + portability).
+- **Runtime user-facing output is English too.** Everything the plugin shows or writes at runtime —
+  the agent's replies, the control panel, command effects, the hook's printed output, and the
+  **content/values** written into `VENTURE.md` / `LANDSCAPE.md` — is English.
+- **Structural headers are load-bearing.** `VENTURE.md` section headers (`Stage:`, `## Metrics source`,
+  `## Kill line`, `## Decisions`, …) and the `Last scan:` line in `LANDSCAPE.md` stay exactly as
+  written so the hook can parse them.
 
-When in doubt: does the model read it (English) or does the user see it (Russian)?
+When in doubt: keep it English, and keep the structural headers verbatim.
 
 ## Repo layout
 
@@ -43,20 +43,20 @@ drift between `SKILL.md`, `reference/`, the agents, the commands, and `README.md
 - **9 lenses (emoji ↔ kebab name):** ⏳ keeper-of-time · 👾 tech-skeptic · 💼 business-pragmatist ·
   🕳 demand-scout · ⚔️ devils-advocate · 🃏 lateral · ⚖️ synthesizer · 🛰 landscape-watcher ·
   🧰 metrics-engineer.
-- **4 gates + verdicts:** 0 Браться ли (`GO-INTO-SETUP`/`DROP`) · 1 Сетап линий
-  (`LINES-SET`/`LINES-INCOMPLETE`; output = written lines + named monkey) · 2 Чекпоинт
-  (`GO`/`PIVOT`/`KILL`/`SCALE`) · 3 Пивот (one single-element pivot, or `KILL`). **KILL & SCALE are
+- **4 gates + verdicts:** 0 Take it on? (`GO-INTO-SETUP`/`DROP`) · 1 Set the lines
+  (`LINES-SET`/`LINES-INCOMPLETE`; output = written lines + named monkey) · 2 Checkpoint
+  (`GO`/`PIVOT`/`KILL`/`SCALE`) · 3 Pivot (one single-element pivot, or `KILL`). **KILL & SCALE are
   verdicts of Gate 2, not gates.** 🃏 lateral sits on every gate.
 - **Lens return block (≤6 lines):** `VERDICT` / `CONFIDENCE` 0–100% / `EVIDENCE` (2–3 facts+sources) /
   `KILL-TRIGGER WATCH`.
-- **Course gradient (6 steps):** 🟢🟢 SCALE · 🟢 НА КУРСЕ · 🟡 БУКСУЕМ · 🟠 ТРЕВОГА · 🔴 FAIL FAST ·
+- **Course gradient (6 steps):** 🟢🟢 SCALE · 🟢 ON COURSE · 🟡 STALLING · 🟠 ALERT · 🔴 FAIL FAST ·
   ⚫ KILLED / 🏁 SHIPPED. Emoji belong to **Course**, never to **Stage**.
 - **Stage values (bare):** SETUP → ALIVE → PIVOTING → SCALING → KILLED/SHIPPED.
 - **VENTURE.md sections:** `# Venture`, `Stage:`, `Course:`, `Current gate:`, `## The bet`,
   `## Vacuum thesis`, `## Lean Canvas`, `## Success line`, `## Kill line`,
-  `## Riskiest assumption (the monkey)`, `## Current experiment`, `## Источник метрик`,
+  `## Riskiest assumption (the monkey)`, `## Current experiment`, `## Metrics source`,
   `## Channels`, `## Log`, `## Decisions`.
-- **Control panel:** the exact Russian dashboard in `reference/venture-md-template.md` (§ Панель).
+- **Control panel:** the exact dashboard in `reference/venture-md-template.md` (§ Panel).
 
 ## Hard constraints when editing
 
@@ -102,7 +102,7 @@ wc -l skills/managing-microventures/SKILL.md             # must be < 500
 ```
 
 **Smoke-test the hook** in a throwaway dir (set `CLAUDE_PROJECT_DIR`). Cover: no `VENTURE.md` → silent;
-full state → Russian status block; collector runs **only** when the source is `✔ verified` (and is NOT
+full state → English status block; collector runs **only** when the source is `✔ verified` (and is NOT
 executed otherwise); working / failing / **hanging** collector (timeout ~10s, no orphan procs);
 collector output with control chars / multiple lines → sanitized to one clean line; a FIFO named
 `VENTURE.md` → skipped, no hang; non-UTF-8 locale (`LANG=C`) → still prints; fresh / stale / garbled /

@@ -29,11 +29,11 @@ Assessments Protocol** (Kahneman, *Noise*):
 
 If you overrule a lens, you must name it **and the specific fact that justifies overruling it.**
 
-Write `WHY` and `NEXT` in **Russian** (they reach the user). Return ONLY:
+Write `WHY` and `NEXT` clearly (they reach the user). Return ONLY:
 
 ```
 VERDICT: <one gate verdict>
-WHY: <2–4 строки по-русски — назови линзы-носители решения и любую перекрытую линзу с обосновывающим фактом>
-NEXT: <по-русски — конкретный следующий шаг / эксперимент / дата>
+WHY: <2–4 lines — name the lenses carrying the decision and any overruled lens with the fact that justifies it>
+NEXT: <the concrete next step / experiment / date>
 DELPHI? <y/n>
 ```

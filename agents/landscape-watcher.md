@@ -23,23 +23,23 @@ what could move a kill trigger or the vacuum thesis, e.g.:
 Drop everything that is merely interesting. One soft "industry buzz" item is noise.
 
 **Write `LANDSCAPE.md`** at the **project root** (next to `VENTURE.md`, never in the global plugin
-dir), content in **Russian**, with this shape — keep the `Last scan:` line in this
+dir), content in **English**, with this shape — keep the `Last scan:` line in this
 exact form so the session hook can parse it:
 
 ```
 Last scan: <YYYY-MM-DD>
 
-## Сдвигают триггер ⚠️
-- <одна строка> · <дата> · <источник> · двигает: <какой триггер / тезис>
+## Moves a trigger ⚠️
+- <one line> · <date> · <source> · moves: <which trigger / thesis>
 
-## Наблюдаем
-- <одна строка> · <дата> · <источник> · следим, потому что: <…>
+## Watching
+- <one line> · <date> · <source> · watching because: <…>
 
-## Тихо
-- <одна строка> · <дата> · <источник>
+## Quiet
+- <one line> · <date> · <source>
 ```
 
-If nothing qualifies, write an empty `Сдвигают триггер ⚠️` section honestly — do not invent movers.
+If nothing qualifies, write an empty `Moves a trigger ⚠️` section honestly — do not invent movers.
 
 Return ONLY this block (≤6 lines):
 

@@ -6,7 +6,7 @@ shared blind-panel mechanics see `consilium-protocol.md`.
 
 ---
 
-## Gate 0 · Браться ли
+## Gate 0 · Take it on?
 
 **Fires:** a raw idea, before any setup.
 **Question for the brief:** is there a real, reachable vacuum worth a small bet — or should we drop it
@@ -33,7 +33,7 @@ demand signal, platform risk, constraints) — drill, research each claim, refus
 
 ---
 
-## Gate 1 · Сетап линий
+## Gate 1 · Set the lines
 
 **Fires:** setting up the venture — fixing the success and kill criteria *before* building.
 **Question for the brief:** what exactly, by when, means this worked — and what means it's dead? What
@@ -67,15 +67,15 @@ statement; monkeys & pedestals.
 
 ---
 
-## Gate 2 · Чекпоинт
+## Gate 2 · Checkpoint
 
 **Fires (you trigger it yourself):** a kill/success date hits · a metric breaches a threshold · drift
 (activity but flat OMTM) · on request (`/audit`).
 **Question for the brief:** against the lines **as written**, is this GO, PIVOT, KILL or SCALE?
-**Lenses:** ⏳ · 👾 · 💼 · 🕳 · ⚔️ as the **Жизнь vs Смерть** pair (Адвокат смерти + Адвокат жизни) · 🃏.
+**Lenses:** ⏳ · 👾 · 💼 · 🕳 · ⚔️ as the **Life vs Death** pair (Advocate of Death + Advocate of Life) · 🃏.
 **Verdict vocabulary:** `GO` / `PIVOT` / `KILL` / `SCALE`.
 
-**Always pull live metrics first** from `## Источник метрик` — never judge on a self-reported number.
+**Always pull live metrics first** from `## Metrics source` — never judge on a self-reported number.
 
 **Emphasis:**
 - ⏳ keeper-of-time compares the actual metric to the lines **exactly as written** (no goalpost-moving),
@@ -100,7 +100,7 @@ statement; monkeys & pedestals.
 
 ---
 
-## Gate 3 · Пивот
+## Gate 3 · Pivot
 
 **Fires:** Gate 2 returned PIVOT.
 **Question for the brief:** which single element change best fits the evidence — or is there no honest

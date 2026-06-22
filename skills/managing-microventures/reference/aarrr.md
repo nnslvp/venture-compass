@@ -43,4 +43,4 @@ For a micro-venture it's a **direction** — depth of a small, committed audienc
 - **💼 business-pragmatist** judges the OMTM vs threshold and rejects vanity metrics.
 - **🕳 demand-scout** counts non-monetary demand (retention/referral, 1000-true-fans) as real
   traction for popularity plays.
-- **Gate 2** reads the OMTM **live** from the source, never "со слов".
+- **Gate 2** reads the OMTM **live** from the source, never "self-reported".

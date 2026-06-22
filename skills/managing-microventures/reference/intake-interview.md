@@ -25,68 +25,69 @@ and any time a field is mushy.
 
 ## The loop, per field
 
-1. Ask the sharp question (in Russian).
+1. Ask the sharp question.
 2. If the answer is vague / hypothetical / a wish → say why it isn't usable and re-ask for specifics.
 3. Research the claim where it's checkable; bring back evidence (agree or contradict, with sources).
 4. Adequacy check against the bar. If it fails, say what's wrong and iterate.
 5. Record only the concrete, checked value.
 
-## Question bank (Russian — these are surfaced to the user)
+## Question bank (these are surfaced to the user)
 
-### Ставка (the bet)
-- Что именно ты строишь и для кого — одним предложением?
-- Почему именно сейчас? Что изменилось, что открыло окно?
-- **Bar:** конкретные «кто» + «что» + причина «сейчас». Отклоняй «приложение для всех».
+### The bet
+- What exactly are you building and for whom — in one sentence?
+- Why now? What changed that opened the window?
+- **Bar:** a concrete "who" + "what" + a reason for "now". Reject "an app for everyone".
 
-### Вакуум + спрос
-- Кто сегодня страдает от этой проблемы и что они делают вместо твоего решения прямо сейчас?
-- Покажи след спроса: запросы, сообщества, жалобы, чужие платные решения.
-- Когда ты последний раз видел, как кто-то платит или тратит время на эту проблему?
-- **Research:** 🕳 demand-scout проверяет запросы/сообщества/конкурентов. **Bar:** ≥1 поведенческий
-  сигнал спроса; вакуум отделён от мёртвого рынка. «Нет конкурентов» спросом **не** считается.
+### Vacuum + demand
+- Who suffers from this problem today, and what do they do instead of your solution right now?
+- Show a demand trail: searches, communities, complaints, other people's paid solutions.
+- When did you last see someone pay or spend time on this problem?
+- **Research:** 🕳 demand-scout checks searches/communities/competitors. **Bar:** ≥1 behavioural
+  demand signal; the vacuum is distinguished from a dead market. "No competitors" does **not** count
+  as demand.
 
-### Линия успеха
-- Что конкретно и к какой дате будет значить «сработало»? Одна метрика, число, дата.
-- **Bar:** состояние + дата + число. Не «наберём аудиторию».
+### Success line
+- What exactly, and by what date, will mean "it worked"? One metric, a number, a date.
+- **Bar:** state + date + number. Not "we'll grow an audience".
 
-### Линия смерти
-- При каком состоянии и к какой дате ты признаешь, что это мертво? Дай минимум два триггера.
-- Честно, в процентах: какова вероятность успеха сегодня?
-- **Research:** ⚔️ devils-advocate (pre-mortem) вытаскивает сценарии провала → триггеры. **Bar:** ≥2
-  триггера «состояние+дата» + честный P%.
+### Kill line
+- At what state and by what date will you admit it's dead? Give at least two triggers.
+- Honestly, in percent: what is the probability of success today?
+- **Research:** ⚔️ devils-advocate (pre-mortem) pulls out failure scenarios → triggers. **Bar:** ≥2
+  "state+date" triggers + an honest P%.
 
-### Самое рискованное допущение (the monkey)
-- Что должно оказаться правдой, иначе всё рушится? Что проверяем ПЕРВЫМ?
-- **Bar:** названо самое смертельное недоказанное допущение; первый эксперимент проверяет именно его.
+### Riskiest assumption (the monkey)
+- What must turn out to be true, or the whole thing collapses? What do we test FIRST?
+- **Bar:** the most lethal unproven assumption is named; the first experiment tests exactly it.
 
-### Первый эксперимент
-- Какую одну гипотезу проверяем первой, чем меряем, к какой дате решение, каков потолок затрат
-  (времени/денег)?
-- **Bar:** гипотеза + метрика + дата решения + потолок.
+### First experiment
+- Which single hypothesis do we test first, what do we measure, by what date is the decision, what is
+  the cost cap (time/money)?
+- **Bar:** hypothesis + metric + decision date + cap.
 
-### Источник метрик
-- Где живёт настоящая цифра OMTM и как её достать (API / экспорт / консоль)?
-- Затем зови 🧰 metrics-engineer — собрать сборщик. **Bar:** реальный автоматизируемый источник, не
-  «посмотрю в админке руками».
+### Metrics source
+- Where does the real OMTM number live and how do you get it (API / export / console)?
+- Then call 🧰 metrics-engineer to build the collector. **Bar:** a real automatable source, not
+  "I'll look in the admin panel by hand".
 
-### Требования / ограничения
-- Какие у тебя ограничения: время в неделю, бюджет, навыки, платформы?
-- **Reality check:** оспаривай требования, нереалистичные для solo-with-AI; отметь платформенный /
-  «rented land» риск (👾).
+### Requirements / constraints
+- What constraints do you have: hours per week, budget, skills, platforms?
+- **Reality check:** challenge requirements unrealistic for a solo-with-AI builder; flag platform /
+  "rented land" risk (👾).
 
-### Каналы
-- Как люди вообще о тебе узнают? Назови 3 канала, которые протестируешь.
-- **Bar:** ≥3 канала-кандидата (Bullseye). «Канала нет» — красный флаг.
+### Channels
+- How will people even hear about you? Name 3 channels you'll test.
+- **Bar:** ≥3 candidate channels (Bullseye). "No channel" is a red flag.
 
 ## Red flags — push back hard
 
-- «Нет конкурентов» как доказательство возможности.
-- «Все» / «любой» в роли аудитории.
-- Недатированные или неизмеримые линии успеха/смерти.
-- Vanity-метрика как OMTM (суммарные регистрации, всего просмотров).
-- Желание («думаю, людям понравится») вместо доказательства.
-- Цифры «со слов» без источника.
-- Полируется лёгкая часть, пока the monkey не проверен.
+- "No competitors" as proof of opportunity.
+- "Everyone" / "anyone" as the audience.
+- Undated or unmeasurable success/kill lines.
+- A vanity metric as the OMTM (cumulative signups, total views).
+- A wish ("I think people will like it") instead of evidence.
+- Self-reported numbers with no source.
+- Polishing the easy part while the monkey is untested.
 
 ## Output
 

@@ -6,12 +6,12 @@ argument-hint: "[reason for killing]"
 Close the current venture **manually**, using the `managing-microventures` skill. KILL is
 **irreversible**, so:
 
-1. **Confirm once.** Show the kill line and ask plainly, in Russian: «Закрываем проект окончательно?
-   Это необратимо. Да/нет». Proceed only on an explicit "да".
+1. **Confirm once.** Show the kill line and ask plainly: "Close the venture for good? This is
+   irreversible. Yes/no". Proceed only on an explicit "yes".
 2. On confirmation, update `VENTURE.md`:
    - `Stage:` → `KILLED`
    - `Course:` → `⚫ KILLED`
-   - Append to `## Decisions` (append-only): `<дата> · MANUAL · VERDICT: KILL (manual)` + the reason
+   - Append to `## Decisions` (append-only): `<date> · MANUAL · VERDICT: KILL (manual)` + the reason
      (`$ARGUMENTS` if given, else ask for one line) + **the one lesson** learned.
 3. **Capture exactly one lesson** — the single most useful thing this bet taught.
 4. **Point at the next bet** — one line on where the freed time/attention should go.

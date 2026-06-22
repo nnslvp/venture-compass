@@ -3,10 +3,9 @@
 `VENTURE.md` is the single source of truth for one micro-venture. It must let a fresh session weeks
 later resume with **zero re-interrogation**.
 
-**Language rule:** the *content* (every value, note, log line) is written in **Russian**. The
-structural headers below stay exactly as written (English, except `## Источник метрик`) so the
-SessionStart/Stop hook can parse them. Keep `Stage:`, `Course:`, `Current gate:`, `## Kill line`,
-`## Decisions` verbatim.
+**Language rule:** everything — content and structure — is **English**. The structural headers below
+stay exactly as written so the SessionStart/Stop hook can parse them. Keep `Stage:`, `Course:`,
+`Current gate:`, `## Metrics source`, `## Kill line`, `## Decisions` verbatim.
 
 ---
 
@@ -19,9 +18,9 @@ SessionStart/Stop hook can parse them. Keep `Stage:`, `Course:`, `Current gate:`
 | Step | Meaning |
 |------|---------|
 | `🟢🟢 SCALE` | success line met — time to pour fuel on |
-| `🟢 НА КУРСЕ` | moving, target reachable, no trigger near |
-| `🟡 БУКСУЕМ` | drift — activity but flat OMTM |
-| `🟠 ТРЕВОГА` | a kill trigger is within one checkpoint of firing |
+| `🟢 ON COURSE` | moving, target reachable, no trigger near |
+| `🟡 STALLING` | drift — activity but flat OMTM |
+| `🟠 ALERT` | a kill trigger is within one checkpoint of firing |
 | `🔴 FAIL FAST` | a kill trigger has fired |
 | `⚫ KILLED` / `🏁 SHIPPED` | closed |
 
@@ -30,100 +29,100 @@ SessionStart/Stop hook can parse them. Keep `Stage:`, `Course:`, `Current gate:`
 ## Section template
 
 Copy this skeleton into the project's `VENTURE.md` (at the **project root**, one per venture). Fill
-the `<...>` in Russian.
+the `<...>` in English.
 
 ```markdown
-# Venture: <название>
+# Venture: <name>
 
 Stage: <ALIVE>
-Course: <🟢 НА КУРСЕ>
-Current gate: <2 · Чекпоинт>
+Course: <🟢 ON COURSE>
+Current gate: <2 · Checkpoint>
 
 ## The bet
-<Одна-две строки: на что ставим и почему сейчас. Самая суть.>
+<One or two lines: what we're betting on and why now. The essence.>
 
 ## Vacuum thesis
-<Какой вакуум закрываем. ОБЯЗАТЕЛЬНО сигнал реального спроса — поисковые запросы,
-сообщества, жалобы, обходные решения, готовность платить/приходить. НЕ «нет конкурентов».>
+<What vacuum we're filling. MANDATORY: a real demand signal — search queries,
+communities, complaints, workarounds, willingness to pay/show up. NOT "no competitors".>
 
 ## Lean Canvas
-Версия: <v1 · 2026-06-15>
-- Проблема: <...>
-- Сегмент: <...>
-- УТП: <...>
-- Решение: <...>
-- Каналы: <...>
-- Поток дохода / ценности: <...>
-- Издержки: <...>
-- Метрики: <...>
-- Несправедливое преимущество: <...>
-<Самое рискованное допущение — пометить ⚠ и вынести в раздел «the monkey» ниже.>
+Version: <v1 · 2026-06-15>
+- Problem: <...>
+- Segment: <...>
+- UVP: <...>
+- Solution: <...>
+- Channels: <...>
+- Revenue / value stream: <...>
+- Costs: <...>
+- Metrics: <...>
+- Unfair advantage: <...>
+<Riskiest assumption — mark it ⚠ and carry it into the "the monkey" section below.>
 
 ## Success line
-<Состояние + дата: «к 2026-07-15 — 200 активных в неделю».>
+<State + date: "by 2026-07-15 — 200 weekly actives".>
 
 ## Kill line
-- Триггер 1 (состояние + дата): <«к 2026-06-30 меньше 50 активных»>.
-- Триггер 2 (состояние + дата): <«ни один из 3 каналов не дал CAC < ценности к 2026-07-10»>.
-Честная P(успеха) на сегодня: <~25%>.
+- Trigger 1 (state + date): <"by 2026-06-30 fewer than 50 actives">.
+- Trigger 2 (state + date): <"none of the 3 channels hit CAC < value by 2026-07-10">.
+Honest P(success) today: <~25%>.
 
 ## Riskiest assumption (the monkey)
-<Самое смертельное недоказанное допущение. Что проверяем ПЕРВЫМ и как.>
+<The most lethal unproven assumption. What we test FIRST and how.>
 
 ## Current experiment
-- Гипотеза: <...>
-- Что меряем (OMTM): <...>
-- Дата решения: <2026-06-30>
-- Потолок затрат (времени/денег): <...>
+- Hypothesis: <...>
+- What we measure (OMTM): <...>
+- Decision date: <2026-06-30>
+- Cost cap (time/money): <...>
 
-## Источник метрик
-Тип: <script | file | API | none>
-Где: <scripts/metrics/collect.sh | путь к экспорту | эндпоинт>
-Последнее живое чтение: <2026-06-15 = 17>
-Статус: <✔ verified | ⚠ self-reported>
+## Metrics source
+Type: <script | file | API | none>
+Where: <scripts/metrics/collect.sh | path to export | endpoint>
+Last live read: <2026-06-15 = 17>
+Status: <✔ verified | ⚠ self-reported>
 
 ## Channels
-<Bullseye: список протестированных каналов и результат каждого.>
+<Bullseye: list of tested channels and the result of each.>
 
 ## Log
-- <2026-06-15> — <что сделали>.
+- <2026-06-15> — <what we did>.
 
 ## Decisions
-<!-- append-only. Каждые ворота: ворота · VERDICT · оценка каждой линзы · почему.
-KILL/PIVOT помечаются proposed, затем confirmed после «да» пользователя. -->
-- <2026-06-15> · Gate 1 · VERDICT: LINES-SET · линзы: ⚔️ ⏳ 💼 🃏 · why: <...>.
+<!-- append-only. Every gate: gate · VERDICT · each lens's call · why.
+KILL/PIVOT are marked proposed, then confirmed after the user's "yes". -->
+- <2026-06-15> · Gate 1 · VERDICT: LINES-SET · lenses: ⚔️ ⏳ 💼 🃏 · why: <...>.
 ```
 
 ---
 
-## Панель (control panel)
+## Panel (control panel)
 
-Print this dashboard **in Russian at the end of every substantive reply**, so the kill line stays in
-view. It is a glanceable status, **not** a "copy this" block. The gauge dot `●` shows the OMTM's
-position between the KILL threshold (left) and the target 🎯 (right).
+Print this dashboard **at the end of every substantive reply**, so the kill line stays in view. It is
+a glanceable status, **not** a "copy this" block. The gauge dot `●` shows the OMTM's position between
+the KILL threshold (left) and the target 🎯 (right).
 
 ```
-🎛 ПАНЕЛЬ ПРОЕКТА
-Проект:  <название / суть>
-Этап:    <ALIVE>  ·  Ворота: <текущие>
-Курс:    <🟠 ТРЕВОГА>   💀 KILL ───●──────── 🎯   (<% к цели> · <дней до триггера>)
-🎯 Вектор:  <текущий эксперимент> → решение <дата>
-💀 Триггер: <что и к какой дате нас убьёт>
-📊 OMTM:    <метрика> = <текущее> / <цель>   <✔ свежесть: сегодня | ⚠ со слов>
-Последнее:  <что сделали сейчас>
+🎛 VENTURE PANEL
+Venture:  <name / essence>
+Stage:    <ALIVE>  ·  Gate: <current>
+Course:   <🟠 ALERT>   💀 KILL ───●──────── 🎯   (<% to target> · <days to trigger>)
+🎯 Vector:  <current experiment> → decision <date>
+💀 Trigger: <what will kill us and by when>
+📊 OMTM:    <metric> = <current> / <target>   <✔ freshness: today | ⚠ self-reported>
+Latest:   <what we did just now>
 ```
 
 Filled example:
 
 ```
-🎛 ПАНЕЛЬ ПРОЕКТА
-Проект:  ДымкаBot — авто-нарезка Reels из стримов
-Этап:    ALIVE  ·  Ворота: 2 · Чекпоинт
-Курс:    🟠 ТРЕВОГА   💀 KILL ──●───────── 🎯   (34% к цели · 5 дней до триггера)
-🎯 Вектор:  платный тест 3 каналов → решение 2026-06-20
-💀 Триггер: <50 активных к 2026-06-20
-📊 OMTM:    активных/нед = 17 / 50   ✔ свежесть: сегодня
-Последнее:  выкатили автопостинг в TikTok
+🎛 VENTURE PANEL
+Venture:  HazeBot — auto-cut Reels from streams
+Stage:    ALIVE  ·  Gate: 2 · Checkpoint
+Course:   🟠 ALERT   💀 KILL ──●───────── 🎯   (34% to target · 5 days to trigger)
+🎯 Vector:  paid test of 3 channels → decision 2026-06-20
+💀 Trigger: <50 actives by 2026-06-20
+📊 OMTM:    actives/week = 17 / 50   ✔ freshness: today
+Latest:   shipped TikTok autoposting
 ```
 
 The gauge dot moves left as the OMTM nears the KILL threshold and right as it nears the target. When
@@ -135,18 +134,18 @@ the OMTM is at or below KILL: `💀●─────────── 🎯` an
 
 During Gate 1 setup, create the venture's `CLAUDE.md` at the project root (or **append** to an
 existing one — **never clobber**) so the state auto-loads each session and survives `/compact`. Create
-`VENTURE.md` first so the `@`-import isn't dangling. Content in Russian:
+`VENTURE.md` first so the `@`-import isn't dangling. Content in English:
 
 ```markdown
-# <Название венчура>
+# <Venture name>
 
-Проект ведётся через venture-compass (микро-венчур).
+This project is run through venture-compass (a micro-venture).
 
 @VENTURE.md
 @LANDSCAPE.md
 
-На старте каждой сессии молча восстанови контекст из VENTURE.md и LANDSCAPE.md и сделай брифинг
-(где мы → что изменилось снаружи → что это значит → рекомендация) + панель. Дальше веди цикл сам:
-следи за датами / метриками / ландшафтом, сам запускай чекпоинты, при сработавшем киллтриггере
-рекомендуй KILL и жди явного «да».
+At the start of every session, silently reconstruct context from VENTURE.md and LANDSCAPE.md and give
+a briefing (where we are → what changed outside → what it means → recommendation) + the panel. Then
+drive the cycle yourself: watch the dates / metrics / landscape, run checkpoints on your own, and on a
+fired kill trigger recommend KILL and wait for an explicit "yes".
 ```

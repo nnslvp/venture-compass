@@ -4,7 +4,7 @@ description: >-
   Use when the user talks about a side-project, micro-app, bot, site or any small AI-built
   venture — and proactively at the START of every session in such a project. Triggers: "start a
   project", "new idea", "how's X going", "should I keep going", "should I kill this", "fail fast",
-  "kill criteria", "pivot", "брифинг", "аудит", "стоит ли браться", plus the commands /start /audit
+  "kill criteria", "pivot", "briefing", "audit", "is it worth taking on", plus the commands /start /audit
   /kill /override /details. This skill makes the AGENT drive the venture lifecycle: it briefs at session
   start, watches kill dates / live metrics / the external landscape and itself decides when to run a
   Stage-Gate decision gate, keeps VENTURE.md as persistent state, convenes a blind adversarial
@@ -57,9 +57,9 @@ landscape is stale (hook flagged it, or `Last scan:` > ~5 days), refresh it with
 **(c) Watch the landscape.** When 🛰 landscape-watcher flags a trigger-mover (a dependency shut down,
 a new competitor, a blocking regulation/wave), raise it immediately and pull toward an audit.
 
-**(d) Pull live metrics every checkpoint** from the registered source in `## Источник метрик`. Never
+**(d) Pull live metrics every checkpoint** from the registered source in `## Metrics source`. Never
 trust a self-reported number; verify it live (run the collector, or read the export). A number typed
-from memory is "⚠ со слов", not "✔ свежо".
+from memory is "⚠ self-reported", not "✔ fresh".
 
 **(e) Interrogate to fill the lines (intake).** At Gate 0/1 — and whenever a field is vague — run a
 drill-down interview: ask sharp questions one thread at a time, **refuse vague / hypothetical /
@@ -72,12 +72,12 @@ until every field is concrete and passes the adequacy check. Full protocol + que
 `reference/intake-interview.md`.
 
 **You issue verdicts yourself.** BUT anything **irreversible** — a **KILL** (abandon) or **committing
-a PIVOT** — you present and then **wait for the user's explicit "да".** On a fired kill trigger you
+a PIVOT** — you present and then **wait for the user's explicit "yes".** On a fired kill trigger you
 push hard and recommend KILL; you do **not** soften it. The final abandonment is the user's call,
 but the honest recommendation is yours.
 
 Say it plainly when a trigger fires:
-> 🔴 Сработал Fail Fast. Триггер: <…>. Убиваем?
+> 🔴 Fail Fast fired. Trigger: <…>. Kill it?
 
 Then capture the one lesson and point at the next bet.
 
@@ -93,7 +93,7 @@ Then capture the one lesson and point at the next bet.
   resolves all of these from the project folder automatically.
 - **`VENTURE.md`** is the single source of truth — one per project. It must let a fresh session
   weeks later resume with **zero re-interrogation**. Full section list and the dashboard format:
-  `reference/venture-md-template.md`. Content is **Russian**; structural headers stay as written so
+  `reference/venture-md-template.md`. Content is **English**; structural headers stay as written so
   the hook can parse them.
 - **`LANDSCAPE.md`** holds the latest external digest (written by 🛰 landscape-watcher).
 - **Wire up `CLAUDE.md` yourself (during setup).** Create the project's `CLAUDE.md` with
@@ -110,10 +110,10 @@ Then capture the one lesson and point at the next bet.
 
 | Gate | Fires when | Lenses convened | Verdict | Borrowed mechanic |
 |------|-----------|-----------------|---------|-------------------|
-| **0 · Браться ли** | a raw idea, before setup | 🕳 demand-scout, 👾 tech-skeptic, ⚔️ devils-advocate, 🃏 lateral | GO-INTO-SETUP / DROP | The Mom Test; low-comp-vs-dead; platform risk; 1000 True Fans |
-| **1 · Сетап линий** | fixing success & kill criteria | ⚔️ devils-advocate (pre-mortem), ⏳ keeper-of-time, 💼 business-pragmatist, 🃏 lateral | the written lines + the named monkey | Lean Canvas riskiest-first; pre-mortem; state+date kill criteria; reverse income statement; monkeys & pedestals |
-| **2 · Чекпоинт** | a date hits / metric breaches / drift / on request | ⏳, 👾, 💼, 🕳, ⚔️ as the **Жизнь vs Смерть** pair, 🃏 | GO / PIVOT / KILL / SCALE | Build-Measure-Learn; AARRR + OMTM; Bullseye; innovation accounting |
-| **3 · Пивот** | Gate 2 returned PIVOT | 4 ephemeral generators (audience / problem / solution / channel) + 🃏, judged blind | one single-element pivot, or KILL | Dialectical Inquiry; Analysis of Competing Hypotheses |
+| **0 · Take it on?** | a raw idea, before setup | 🕳 demand-scout, 👾 tech-skeptic, ⚔️ devils-advocate, 🃏 lateral | GO-INTO-SETUP / DROP | The Mom Test; low-comp-vs-dead; platform risk; 1000 True Fans |
+| **1 · Set the lines** | fixing success & kill criteria | ⚔️ devils-advocate (pre-mortem), ⏳ keeper-of-time, 💼 business-pragmatist, 🃏 lateral | the written lines + the named monkey | Lean Canvas riskiest-first; pre-mortem; state+date kill criteria; reverse income statement; monkeys & pedestals |
+| **2 · Checkpoint** | a date hits / metric breaches / drift / on request | ⏳, 👾, 💼, 🕳, ⚔️ as the **Life vs Death** pair, 🃏 | GO / PIVOT / KILL / SCALE | Build-Measure-Learn; AARRR + OMTM; Bullseye; innovation accounting |
+| **3 · Pivot** | Gate 2 returned PIVOT | 4 ephemeral generators (audience / problem / solution / channel) + 🃏, judged blind | one single-element pivot, or KILL | Dialectical Inquiry; Analysis of Competing Hypotheses |
 
 **KILL is a verdict of Gate 2** (reinforced by ⏳ + ⚔️), not its own gate. SCALE is likewise a Gate 2
 verdict. Per-gate detail: `reference/gate-playbook.md`.
@@ -145,8 +145,8 @@ subagent in its own context, given the same neutral brief, none seeing the other
    for the missing fact.
 6. **Log, then surface** — write the verdict + each lens's call to `## Decisions`, then reply short.
 
-Gate 2 also runs ⚔️ devils-advocate **twice** as an explicit dialectical pair — *Адвокат смерти*
-(strongest case to KILL) vs *Адвокат жизни* (strongest honest case to CONTINUE), each independent;
+Gate 2 also runs ⚔️ devils-advocate **twice** as an explicit dialectical pair — *Advocate of Death*
+(strongest case to KILL) vs *Advocate of Life* (strongest honest case to CONTINUE), each independent;
 the synthesizer picks the stronger, blind of preference. Gate 3 spawns 4 ephemeral generators (one
 per element) + 🃏; the synthesizer picks the best single-element pivot or concludes "no honest pivot →
 KILL".
@@ -156,7 +156,7 @@ KILL".
 ## 6. The control panel + the commands
 
 **Print the control panel as a dashboard at the end of every substantive reply** — so the kill line
-stays in view. Exact Russian format: `reference/venture-md-template.md` (§ Панель). The gauge dot is
+stays in view. Exact format: `reference/venture-md-template.md` (§ Panel). The gauge dot is
 the OMTM's position between the KILL threshold and the target.
 
 **`/start`** is the kickoff. The other four are **manual overrides** — briefing, landscape scans and
@@ -178,7 +178,7 @@ A gate is **not closed** until its **verdict + each lens's call** are written to
 log (append-only). Until then the gate is still open.
 
 - Irreversible verdicts (**KILL**, **committing a PIVOT**) are written as **proposed** first, then
-  flipped to **confirmed** only after the user's explicit "да".
+  flipped to **confirmed** only after the user's explicit "yes".
 - A fired kill trigger, once logged, is **never erased or rewritten** — not by `/override`, not by
   changing criteria. Changing criteria later is a deliberate, separately-logged decision.
 - One verdict per gate.
@@ -197,15 +197,14 @@ log (append-only). Until then the gate is still open.
    number typed from memory.
 5. **One verdict per gate.**
 6. **Irreversible → confirm.** Issue reversible verdicts yourself; for KILL or committing a PIVOT,
-   present and wait for the user's explicit "да".
+   present and wait for the user's explicit "yes".
 7. **Interrogate before you record.** Fill a `VENTURE.md` line only from a concrete, evidence-checked
    answer — never from a vague, hypothetical, or wishlist reply. Drill, research, and sanity-check
    first (`reference/intake-interview.md`).
 8. **Letter = spirit.** Violating the letter of these rules is violating their spirit.
 
-**Language:** these instructions are English (portability). All user-facing output — your replies,
-the panel, command effects, and everything you write into `VENTURE.md` / `LANDSCAPE.md` — is in
-**Russian**.
+**Language:** everything is English — these instructions, your replies, the panel, command effects,
+and everything you write into `VENTURE.md` / `LANDSCAPE.md`.
 
 ---
 
@@ -213,7 +212,7 @@ the panel, command effects, and everything you write into `VENTURE.md` / `LANDSC
 
 | File | What it holds |
 |------|---------------|
-| `reference/venture-md-template.md` | VENTURE.md section template + the exact Russian control panel + the 6-step course gradient |
+| `reference/venture-md-template.md` | VENTURE.md section template + the exact control panel + the 6-step course gradient |
 | `reference/consilium-protocol.md` | The full blind-consilium algorithm (brief → dispatch → ACH → synthesis → Delphi → log) |
 | `reference/gate-playbook.md` | Per-gate detail for Gates 0–3 |
 | `reference/intake-interview.md` | The intake interview — drill-down questions, live research, and the adequacy bar for every `VENTURE.md` field |

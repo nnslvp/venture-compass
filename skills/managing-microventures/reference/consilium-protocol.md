@@ -15,19 +15,19 @@ Run the whole thing **inside**; surface only the short result (see step 6).
 Build one brief from `VENTURE.md`. **Facts only.** Identical for every lens. No hint of a preferred
 outcome. **No lens names** and no mention that other lenses exist.
 
-Brief skeleton (fill from `VENTURE.md`, in Russian):
+Brief skeleton (fill from `VENTURE.md`):
 
 ```
-ПРОЕКТ: <суть>
-СТАВКА: <the bet>
-ВАКУУМ + СИГНАЛ СПРОСА: <vacuum thesis + evidence>
-ЛИНИЯ УСПЕХА (как записана): <state+date>
-ЛИНИЯ СМЕРТИ (как записана): <triggers + P%>
-САМОЕ РИСКОВАННОЕ ДОПУЩЕНИЕ: <the monkey>
-ТЕКУЩИЙ ЭКСПЕРИМЕНТ: <hypothesis, measure, decision date, cap>
-ЖИВЫЕ МЕТРИКИ (из источника, не «со слов»): <OMTM = current / target · freshness>
-КАНАЛЫ: <bullseye state>
-ВОПРОС ВОРОТ: <the one decision this gate must make>
+VENTURE: <essence>
+BET: <the bet>
+VACUUM + DEMAND SIGNAL: <vacuum thesis + evidence>
+SUCCESS LINE (as written): <state+date>
+KILL LINE (as written): <triggers + P%>
+RISKIEST ASSUMPTION: <the monkey>
+CURRENT EXPERIMENT: <hypothesis, measure, decision date, cap>
+LIVE METRICS (from the source, not self-reported): <OMTM = current / target · freshness>
+CHANNELS: <bullseye state>
+GATE QUESTION: <the one decision this gate must make>
 ```
 
 Never embed your own opinion. If a number is self-reported (not verified live), label it so — the
@@ -98,16 +98,16 @@ ask the user for the one missing fact rather than spinning.
 2. **Surface** to the user only: **verdict + 2–4 reasons + the panel.** ~6 lines.
 3. **Hold** all transcripts. Reveal them only on `/details`.
 4. The gate is **closed** only once the log entry exists. Irreversible verdicts flip to **confirmed**
-   only after the user's explicit "да".
+   only after the user's explicit "yes".
 
 ---
 
-## Gate 2 — the «Жизнь vs Смерть» dialectical pair
+## Gate 2 — the Life vs Death dialectical pair
 
 On a checkpoint, run ⚔️ devils-advocate **twice**, as two independent subagents:
 
-- **Адвокат смерти** — build the strongest evidence-backed case to **KILL**.
-- **Адвокат жизни** — build the strongest *honest* case to **CONTINUE** (no cheerleading, no
+- **Advocate of Death** — build the strongest evidence-backed case to **KILL**.
+- **Advocate of Life** — build the strongest *honest* case to **CONTINUE** (no cheerleading, no
   goalpost-moving; real evidence only).
 
 Each is blind to the other. The synthesizer picks the stronger case **blind of preference** — it must

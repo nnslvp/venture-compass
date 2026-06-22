@@ -9,8 +9,8 @@ At each gate it convenes a thorough **adversarial consilium** of subagent "lense
 and independently**, then a synthesizer fuses them into one honest verdict — **GO / PIVOT / KILL /
 SCALE**. State persists across sessions in `VENTURE.md`. **Default bias: kill on time.**
 
-> The runtime output (briefings, the panel, verdicts, and everything written to `VENTURE.md` /
-> `LANDSCAPE.md`) is in **Russian**. The plugin's internal instructions are in English.
+> Everything is in **English** — the runtime output (briefings, the panel, verdicts, and everything
+> written to `VENTURE.md` / `LANDSCAPE.md`) and the plugin's internal instructions alike.
 
 ## Install
 
@@ -27,7 +27,7 @@ claude --plugin-dir /path/to/parent-of-venture-compass
 
 **Just talk about your project.** The agent takes it from there:
 
-- Mention a new idea, ask "стоит ли браться?", or "how's X going?" — it briefs and runs the right
+- Mention a new idea, ask "is it worth taking on?", or "how's X going?" — it briefs and runs the right
   gate.
 - It runs checkpoints itself when a kill date hits, a metric breaches a threshold, or it sees drift.
 - **One-time setup:** add these to your project's `CLAUDE.md` so state auto-loads every session and
@@ -53,10 +53,10 @@ scans, and metric pulls happen automatically:
 
 | Gate | Fires when | Lenses convened | Verdict |
 |------|-----------|-----------------|---------|
-| **0 · Браться ли** | a raw idea, before setup | 🕳 demand-scout, 👾 tech-skeptic, ⚔️ devils-advocate, 🃏 lateral | GO-INTO-SETUP / DROP |
-| **1 · Сетап линий** | fixing success & kill criteria | ⚔️ devils-advocate (pre-mortem), ⏳ keeper-of-time, 💼 business-pragmatist, 🃏 lateral | the written lines + the named monkey |
-| **2 · Чекпоинт** | a date hits / metric breaches / drift / on request | ⏳, 👾, 💼, 🕳, ⚔️ as the **Жизнь vs Смерть** pair, 🃏 | GO / PIVOT / KILL / SCALE |
-| **3 · Пивот** | Gate 2 returned PIVOT | 4 ephemeral generators (audience / problem / solution / channel) + 🃏 | one single-element pivot, or KILL |
+| **0 · Take it on?** | a raw idea, before setup | 🕳 demand-scout, 👾 tech-skeptic, ⚔️ devils-advocate, 🃏 lateral | GO-INTO-SETUP / DROP |
+| **1 · Set the lines** | fixing success & kill criteria | ⚔️ devils-advocate (pre-mortem), ⏳ keeper-of-time, 💼 business-pragmatist, 🃏 lateral | the written lines + the named monkey |
+| **2 · Checkpoint** | a date hits / metric breaches / drift / on request | ⏳, 👾, 💼, 🕳, ⚔️ as the **Life vs Death** pair, 🃏 | GO / PIVOT / KILL / SCALE |
+| **3 · Pivot** | Gate 2 returned PIVOT | 4 ephemeral generators (audience / problem / solution / channel) + 🃏 | one single-element pivot, or KILL |
 
 KILL and SCALE are verdicts of Gate 2, not separate gates. The 🃏 lateral seat sits on every gate.
 
